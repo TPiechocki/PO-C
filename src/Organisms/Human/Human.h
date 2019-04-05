@@ -7,7 +7,9 @@
 
 #include <src/Organisms/Animal.h>
 
-class Human : public Animal {
+class Human final : public Animal {
+protected:
+    void randomDirection() override;
 
 public:
     Human(int x, int y, World* world);
@@ -17,11 +19,11 @@ public:
      */
     void setDirection(int);
 
-    void collision() override;
-
     char draw() override;
 
-   ~Human() final;
+    std::string getGatunek() override;
+
+    ~Human();
 };
 
 

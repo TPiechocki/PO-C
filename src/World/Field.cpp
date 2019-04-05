@@ -10,13 +10,17 @@ Field::Field() {
 
 char Field::draw() const {
     if (!organism)
-        return 'X';
+        return ' ';
     else
         return organism->draw();
 }
 
 void Field::setOrganism(Organism *org) {
     Field::organism = org;
+}
+
+Organism *Field::getOrganism() const {
+    return organism;
 }
 
 void Field::setNull() {

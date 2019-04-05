@@ -5,15 +5,16 @@
 #ifndef PO_C_WORLD_H
 #define PO_C_WORLD_H
 
-#include "Field.h"
-#include "../Organisms/Organism.h"
-
 #include <vector>
-#include <src/Renderer/Renderer.h>
+
+#include "Field.h"
+#include "src/Organisms/Organism.h"
+#include "src/Renderer/Renderer.h"
 
 class Field;
 class Organism;
 class Renderer;
+
 
 class World {
 private:
@@ -22,30 +23,42 @@ private:
     Field** board;
 
     std::vector<Organism*> entities;
-public:
+
     /**
-     * Renderer for displaying notifications
+     * Renderer wyświetlający świat oraz powiadomienia
      */
     Renderer* renderer;
-
+public:
     World(int x, int y);
 
     int getSizeX() const;
 
     int getSizeY() const;
 
+    Renderer *getRenderer() const;
+
+    void newMessage(const std::string&);
+
     /**
-     * @return char for the field of (x,y) coordinates
+     * Na potrzebę kolizji.
+     * @return Wskaźnik do organizmu znajdującego się na polu (x,y)
+     */
+    Organism *getOrganism(int x, int y);
+
+    /**
+     * @return znak reprezuntujący organizm na polu (x,y)
      */
     char getFieldChar(int x, int y);
 
     /**
-     * Add organism to vector entities
+     * Dodanie organismu do wektora wszystkich organizmów w odpowiednie miejsce
      */
     void addOrganism(Organism *);
 
+    void removeOrganism(Organism *);
+
     /**
-     * Move all organisms
+     * Wykonanie tury
      */
     void makeTurn();
 

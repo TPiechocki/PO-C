@@ -24,17 +24,17 @@ public:
     explicit Renderer(World& World);
 
     /**
-     * Add message at the end of list
+     * Dodanie wiadomości na końcu listy
      */
     void newMessage(const std::string&);
 
     /**
-     * Display board of the world
+     * Wyświetlenie planszy świata
      */
     void displayWorld() const;
 
     /**
-     * Display notifications from messages list with delay between them(in another thread)
+     * Wyświetlenia powiadomień z listy co jakiś określony czas(inny wątek)
      */
     void displayNotifications();
 

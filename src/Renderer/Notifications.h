@@ -1,5 +1,5 @@
 //
-// Created by tomaszek on 01/04/19.
+// Created by Tomasz Piechocki on 01/04/19.
 //
 
 #ifndef PO_C_NOTIFICATIONS_H
@@ -13,8 +13,8 @@
 class Notifications {
 public:
     /**
-     * Thread method for displaying notifications
-     * @param messages
+     * Metoda dla wątka do wyświetlania powiadomień
+     * @param messages - lista wiadomości do wyświetlenia
      */
     void run(std::deque<std::string>& messages);
 };

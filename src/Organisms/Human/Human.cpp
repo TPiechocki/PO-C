@@ -17,12 +17,16 @@ void Human::setDirection(int ch) {
     direction = ch;
 }
 
-void Human::collision() {
-
-}
-
 char Human::draw() {
     return '*';
+}
+
+void Human::randomDirection() {
+    // empty
+}
+
+std::string Human::getGatunek() {
+    return "Czlowiek";
 }
 
 Human::~Human() = default;

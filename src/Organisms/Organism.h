@@ -19,18 +19,21 @@
     #define KEY_RIGHT 77
 #endif
 
-#include <src/World/World.h>
+#include "src/World/World.h"
 
 class World;
 
+enum Kind {SHEEP, WOLF, HUMAN};
+
 class Organism {
 protected:
-    int strength, initiative, x_coord, y_coord, age;
+    int strength{}, initiative{}, x_coord{}, y_coord{}, age{}, vector_pos{};
 
-    World* world;
+    Kind kind{};
+
+    World* world{};
+
 public:
-    Organism();
-
     /**
      * Wykonanie ruchu
      */
@@ -46,17 +49,30 @@ public:
      */
     int getY() const;
 
+    int getVectorPos() const;
+
+    int getInitiative() const;
+
+    int getAge() const;
+
+    /**
+     * Zmiana wieku o 1 w góre, wywołane dla każdego w każdej turze.
+     */
+    void addOneAge();
+
     /**
      * Kolizja z innym organizmem
+     * @param other - atakujący
+     * @return - zwyciężca
      */
-    virtual void collision() = 0;
+    virtual Organism *collision(Organism* other);
 
     /**
      * @return Zwraca znak charakterystyczny dla gatunku
      */
     virtual char draw() = 0;
 
-    virtual ~Organism();
+    virtual std::string getGatunek() = 0;
 };
 
 

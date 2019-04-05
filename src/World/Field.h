@@ -34,7 +34,8 @@ public:
     char draw() const;
 
     ~Field();
-};
 
+    Organism *getOrganism() const;
+};
 
 #endif //PO_C_FIELD_H

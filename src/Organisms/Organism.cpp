@@ -4,13 +4,9 @@
 
 #include "Organism.h"
 
-Organism::Organism() {
-    strength = 0, initiative = 0, x_coord = 0, y_coord = 0, age = 0;
-    world = nullptr;
-}
 
-char Organism::draw() {
-    return 0;
+void Organism::addOneAge() {
+ age++;
 }
 
 int Organism::getX() const {
@@ -21,4 +17,35 @@ int Organism::getY() const {
     return y_coord;
 }
 
-Organism::~Organism() = default;
+int Organism::getVectorPos() const {
+    return vector_pos;
+}
+
+int Organism::getInitiative() const {
+    return initiative;
+}
+
+int Organism::getAge() const {
+    return age;
+}
+
+Organism *Organism::collision(Organism* other) {
+    std::string msg;
+    if (other->strength < this->strength) {
+        msg = this->getGatunek() + " zabija " + other->getGatunek();
+        world->newMessage(msg);
+
+        world->removeOrganism(other);
+        free(other);
+        return this;
+    }
+    else {      // jeśli siła równa dla obu to wygrywa atakujący
+        msg = other->getGatunek() + " zabija " + this->getGatunek();
+        world->newMessage(msg);
+
+        world->removeOrganism(this);
+        free(this);
+        return other;
+    }
+}
+

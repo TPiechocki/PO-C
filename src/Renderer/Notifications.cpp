@@ -1,5 +1,5 @@
 //
-// Created by tomaszek on 01/04/19.
+// Created by Tomasz Piechocki on 01/04/19.
 //
 
 #include <chrono>

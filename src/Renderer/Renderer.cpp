@@ -24,12 +24,23 @@ void Renderer::displayWorld() const {
         cout  << endl;
     }
 
+    cout << "|";
+    for (int i = 0; i < world.getSizeX() ; i++)
+        cout << "-";
+    cout << "|\n";
+
     for (int i = 0; i < world.getSizeY(); ++i) {
+        cout << "|";
         for (int j = 0; j < world.getSizeX(); ++j) {
-            cout << world.getFieldChar(j, i) << " ";
+            cout << world.getFieldChar(j, i) << flush;
         }
-        cout << endl;
+        cout << "|\n";
     }
+
+    cout << "|";
+    for (int i = 0; i < world.getSizeX() ; i++)
+        cout << "-";
+    cout << "|\n";
 }
 
 void Renderer::displayNotifications() {
