@@ -19,21 +19,28 @@
     #define KEY_RIGHT 77
 #endif
 
-#include "src/World/World.h"
+#include "../World/World.h"
 
 class World;
 
-enum Kind {SHEEP, WOLF, HUMAN};
+enum Kind {
+    HUMAN, SHEEP, WOLF, GRASS, DANDELION
+};
 
 class Organism {
 protected:
-    int strength{}, initiative{}, x_coord{}, y_coord{}, age{}, vector_pos{};
+    int strength{}, initiative{}, x_coord, y_coord, age, direction;
 
     Kind kind{};
 
-    World* world{};
+    World *world;
 
+    virtual Organism * createNewInstance(int x, int y, World *world) = 0;
+
+    virtual void randomDirection();
 public:
+    Organism(int x, int y, World *world);
+
     /**
      * Wykonanie ruchu
      */
@@ -49,11 +56,11 @@ public:
      */
     int getY() const;
 
-    int getVectorPos() const;
-
     int getInitiative() const;
 
     int getAge() const;
+
+    int getStrength() const;
 
     /**
      * Zmiana wieku o 1 w góre, wywołane dla każdego w każdej turze.
@@ -62,17 +69,27 @@ public:
 
     /**
      * Kolizja z innym organizmem
-     * @param other - atakujący
+     * @param attacker - atakujący
      * @return - zwyciężca
      */
-    virtual Organism *collision(Organism* other);
+    virtual bool collision(Organism *attacker);
 
     /**
      * @return Zwraca znak charakterystyczny dla gatunku
      */
     virtual char draw() = 0;
 
-    virtual std::string getGatunek() = 0;
+    virtual std::string getKind() = 0;
+
+    bool operator<(const Organism &rhs) const;
+
+    bool operator>(const Organism &rhs) const;
+
+    bool operator<=(const Organism &rhs) const;
+
+    bool operator>=(const Organism &rhs) const;
+
+    virtual ~Organism();
 };
 
 

@@ -5,11 +5,13 @@
 #ifndef PO_C_HUMAN_H
 #define PO_C_HUMAN_H
 
-#include <src/Organisms/Animal.h>
+#include "../Animal.h"
 
 class Human final : public Animal {
 protected:
     void randomDirection() override;
+
+    Organism *createNewInstance(int x, int y, World *world) override;
 
 public:
     Human(int x, int y, World* world);
@@ -21,9 +23,9 @@ public:
 
     char draw() override;
 
-    std::string getGatunek() override;
+    std::string getKind() override;
 
-    ~Human();
+    ~Human() override;
 };
 
 

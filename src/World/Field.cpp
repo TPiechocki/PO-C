@@ -24,7 +24,7 @@ Organism *Field::getOrganism() const {
 }
 
 void Field::setNull() {
-    organism = nullptr;
+    Field::organism = nullptr;
 }
 
 Field::~Field() = default;

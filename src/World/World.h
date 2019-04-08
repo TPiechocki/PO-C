@@ -8,8 +8,8 @@
 #include <vector>
 
 #include "Field.h"
-#include "src/Organisms/Organism.h"
-#include "src/Renderer/Renderer.h"
+#include "../Organisms/Organism.h"
+#include "../Renderer/Renderer.h"
 
 class Field;
 class Organism;
@@ -43,7 +43,9 @@ public:
      * Na potrzebę kolizji.
      * @return Wskaźnik do organizmu znajdującego się na polu (x,y)
      */
-    Organism *getOrganism(int x, int y);
+    Organism *getOrganismFromBoard(int x, int y);
+
+    void setOrganismOnBoard(Organism *org);
 
     /**
      * @return znak reprezuntujący organizm na polu (x,y)

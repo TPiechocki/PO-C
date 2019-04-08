@@ -5,7 +5,7 @@
 #ifndef PO_C_RENDERER_H
 #define PO_C_RENDERER_H
 
-#include <src/World/World.h>
+#include "../World/World.h"
 #include "Notifications.h"
 
 class World;
@@ -15,13 +15,13 @@ private:
     World& world;
 
     // thread for notifications
-    pthread_t notifThread;
+    pthread_t notif_thread;
 
     // double sided list of messages for notifications
     std::deque<std::string> messages;
 
 public:
-    explicit Renderer(World& World);
+    explicit Renderer(World& world);
 
     /**
      * Dodanie wiadomości na końcu listy

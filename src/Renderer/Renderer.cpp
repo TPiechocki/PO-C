@@ -3,8 +3,8 @@
 //
 
 #include <thread>
-#include <deque>
 #include <iostream>
+
 #include "Renderer.h"
 #include "Notifications.h"
 
@@ -12,7 +12,7 @@ using namespace std;
 
 Renderer::Renderer(World& world) : world(world) {
     messages = std::deque<std::string>();
-    notifThread = 0;
+    notif_thread = 0;
 }
 
 void Renderer::newMessage(const std::string& msg) {
@@ -44,9 +44,9 @@ void Renderer::displayWorld() const {
 }
 
 void Renderer::displayNotifications() {
-    if (notifThread != 0) {
-        pthread_cancel(notifThread);
-        notifThread = 0;
+    if (notif_thread != 0) {
+        pthread_cancel(notif_thread);
+        notif_thread = 0;
     }
 
     Notifications notifications;
@@ -54,7 +54,7 @@ void Renderer::displayNotifications() {
     std::thread notif([&]() {
         notifications.run(messages);
     });
-    notifThread = notif.native_handle();
+    notif_thread = notif.native_handle();
     notif.detach();
 }
 

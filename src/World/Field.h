@@ -5,7 +5,7 @@
 #ifndef PO_C_FIELD_H
 #define PO_C_FIELD_H
 
-#include <src/Organisms/Organism.h>
+#include "../Organisms/Organism.h"
 
 class Organism;
 

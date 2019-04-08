@@ -4,13 +4,10 @@
 
 #include "Human.h"
 
-Human::Human(int x, int y, World* world) {
+Human::Human(int x, int y, World* world) : Animal(x, y, world) {
     strength = 5;
     initiative = 4;
-    x_coord = x;
-    y_coord = y;
-    this->world = world;
-    age = 0;
+    kind = HUMAN;
 }
 
 void Human::setDirection(int ch) {
@@ -25,8 +22,12 @@ void Human::randomDirection() {
     // empty
 }
 
-std::string Human::getGatunek() {
+std::string Human::getKind() {
     return "Czlowiek";
+}
+
+Organism *Human::createNewInstance(int x, int y, World *world) {
+    return new Human(x, y, world);
 }
 
 Human::~Human() = default;

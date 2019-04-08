@@ -4,13 +4,9 @@
 
 #include "Sheep.h"
 
-Sheep::Sheep(int x, int y, World* world) {
+Sheep::Sheep(int x, int y, World* world) : Animal(x, y, world) {
     strength = 4;
     initiative = 4;
-    x_coord = x;
-    y_coord = y;
-    this->world = world;
-    age = 0;
     kind = SHEEP;
 }
 
@@ -18,8 +14,12 @@ char Sheep::draw() {
     return 'O';
 }
 
-std::string Sheep::getGatunek() {
+std::string Sheep::getKind() {
     return "Owca";
+}
+
+Organism *Sheep::createNewInstance(int x, int y, World *world) {
+    return new Sheep(x, y, world);
 }
 
 Sheep::~Sheep() = default;

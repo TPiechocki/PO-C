@@ -4,13 +4,9 @@
 
 #include "Wolf.h"
 
-Wolf::Wolf(int x, int y, World* world) {
+Wolf::Wolf(int x, int y, World* world) : Animal(x, y, world) {
     strength = 9;
     initiative = 9;
-    x_coord = x;
-    y_coord = y;
-    this->world = world;
-    age = 0;
     kind = WOLF;
 }
 
@@ -18,8 +14,12 @@ char Wolf::draw() {
     return 'W';
 }
 
-std::string Wolf::getGatunek() {
+std::string Wolf::getKind() {
     return "Wilk";
+}
+
+Organism *Wolf::createNewInstance(int x, int y, World *world) {
+    return new Wolf(x, y, world);
 }
 
 Wolf::~Wolf() = default;

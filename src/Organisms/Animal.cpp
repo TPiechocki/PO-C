@@ -4,25 +4,11 @@
 
 #include "Animal.h"
 
-// private
-void Animal::randomDirection()  {
-    int n = rand() % 4;
-    switch (n) {
-        case 0:
-            direction  = KEY_UP;
-            break;
-        case 1:
-            direction = KEY_DOWN;
-            break;
-        case 2:
-            direction = KEY_LEFT;
-            break;
-        default:
-            direction = KEY_RIGHT;
-    }
+Animal::Animal(int x, int y, World *world) : Organism(x, y, world) {
+    previous_x = -1;
+    previous_y = -1;  // TODO check for turtle (remember to check if positive)
 }
 
-// public
 void Animal::move() {
     previous_x = x_coord;
     previous_y = y_coord;
@@ -37,7 +23,8 @@ void Animal::move() {
         case KEY_DOWN:
             if (y_coord < world->getSizeY() - 1)
                 y_coord++;
-            break;case KEY_LEFT:
+            break;
+        case KEY_LEFT:
             if (x_coord > 0)
                 x_coord--;
             break;
@@ -50,3 +37,5 @@ void Animal::move() {
                 x_coord++;
     }
 }
+
+Animal::~Animal() = default;

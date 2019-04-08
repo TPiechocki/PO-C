@@ -10,17 +10,18 @@
 class Animal : public Organism {
 protected:
     // Poprzednie koordynaty mogą się przydać przy odbiciu żółwia.
-    int direction{}, previous_x{}, previous_y{};
+    int previous_x{}, previous_y{};
 
-    /**
-     * Wybiera losowy kierunek kolejnego ruchu.
-     */
-    virtual void randomDirection();
 public:
+    Animal(int x, int y, World *world);
+
     /**
      * Ruch w odpowiednim kierunku
      */
-    void move() override;
+    void move() override;\
+
+
+    ~Animal() override;
 };
 
 

@@ -11,26 +11,32 @@ using namespace std;
 
 #ifdef __linux__
     #include <caca_conio.h>
+
 #else
     #include <conio.h>
 #endif
 
-#include "src/World/World.h"
-#include "src/Organisms/Human/Human.h"
-#include "src/Organisms/Animals/Sheep.h"
-#include "src/Organisms/Animals/Wolf.h"
+#include "World/World.h"
+#include "Organisms/Human/Human.h"
+#include "Organisms/Animals/Sheep.h"
+#include "Organisms/Animals/Wolf.h"
+#include "Organisms/Animals/Fox.h"
+#include "Organisms/Plants/Grass.h"
+#include "Organisms/Plants/Dandelion.h"
 
 int main() {
-    srand(time(nullptr));
+    srand(static_cast<unsigned int>(time(nullptr)));
     int x,y;
 
 #ifdef TEST
     x=20, y=20;
 #else
-    cout << "Podaj szerokosc planszy: ";
-    cin >> x;
-    cout << "Podaj wysokosc planszy: ";
-    cin >> y;
+     do {
+        cout << "Podaj szerokosc planszy: ";
+        cin >> x;
+        cout << "Podaj wysokosc planszy: ";
+        cin >> y;
+    } while (!(x*y < 100 || x < 50 || y < 50 || x>0 || y>0));
 #endif
 
     auto *world = new World(x, y);
@@ -38,8 +44,12 @@ int main() {
 
     auto *player = new Human(0, 0, world);
     world->addOrganism(player);
-    world->addOrganism(new Sheep(0,1, world));
-    world->addOrganism(new Wolf(0,2, world));
+    world->addOrganism(new Sheep(0,15, world));
+    world->addOrganism(new Wolf(0,1, world));
+    world->addOrganism(new Fox(1,0, world));
+    world->addOrganism(new Grass(19, 19, world));
+    world->addOrganism(new Dandelion(0, 19, world));
+
 
     renderer->displayWorld();
 
