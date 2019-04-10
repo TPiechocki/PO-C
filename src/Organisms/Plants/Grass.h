@@ -17,7 +17,7 @@ public:
 
     char draw() override;
 
-    std::string getKind() override;
+    std::string getKindString() override;
 
     ~Grass() override;
 };

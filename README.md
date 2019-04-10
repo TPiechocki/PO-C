@@ -5,6 +5,7 @@ First project for Object-oriented Programming written in C++.
 Changelog:
 
 0.1
+- animals can reproduce themselves
 - plants with possibility to scatter
 - kills with collision
 - animals stored in ordered vector

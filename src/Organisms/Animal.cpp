@@ -5,8 +5,8 @@
 #include "Animal.h"
 
 Animal::Animal(int x, int y, World *world) : Organism(x, y, world) {
-    previous_x = -1;
-    previous_y = -1;  // TODO check for turtle (remember to check if positive)
+    previous_x = x;
+    previous_y = y;
 }
 
 void Animal::move() {
@@ -36,6 +36,77 @@ void Animal::move() {
             if (x_coord < world->getSizeX() - 1)
                 x_coord++;
     }
+}
+
+
+Organism * Animal::breed(Animal *other) {
+    Organism *new_org = nullptr;
+
+    std::string msg;
+    other->x_coord = other->previous_x;
+    other->y_coord = other->previous_y;
+
+    world->setOrganismOnBoard(other);
+
+    if (this->age <= 0)
+        return nullptr;
+
+    int x_new = this->x_coord, y_new = this->y_coord, status = 0;
+    this->randomDirection();
+    do {
+        switch (this->direction) {
+            case KEY_UP:
+                if (y_new > 0)
+                    y_new--;
+                else {
+                    y_new = this->y_coord;
+                    this->direction = KEY_DOWN;
+                    status++;
+                }
+                break;
+            case KEY_DOWN:
+                if (y_new < world->getSizeY() - 1)
+                    y_new++;
+                else {
+                    y_new = this->y_coord;
+                    this->direction = KEY_LEFT;
+                    status++;
+                }
+                break;
+            case KEY_LEFT:
+                if (x_new > 0)
+                    x_new--;
+                else {
+                    x_new = this->x_coord;
+                    this->direction = KEY_RIGHT;
+                    status++;
+                }
+                break;
+            case KEY_RIGHT:
+                if (x_new < world->getSizeX() - 1)
+                    x_new++;
+                else {
+                    x_new = this->x_coord;
+                    this->direction = KEY_UP;
+                    status++;
+                }
+                break;
+            default:
+                break;
+        }
+    } while (world->getOrganismFromBoard(x_new, y_new) &&
+            world->getOrganismFromBoard(x_new, y_new)->getKind() == this->getKind() && status <= 4);
+
+    if (status <=4) {
+        msg = "Zwierzę " + this->getKindString() + " się rozmnożyło.";
+        world->newMessage(msg);
+
+        new_org = createNewInstance(x_new, y_new, world);
+        world->addOrganism(new_org);
+    }
+
+    return new_org;
+
 }
 
 Animal::~Animal() = default;

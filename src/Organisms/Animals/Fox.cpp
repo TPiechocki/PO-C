@@ -13,7 +13,7 @@ char Fox::draw() {
     return 'L';
 }
 
-std::string Fox::getKind() {
+std::string Fox::getKindString() {
     return "Lis";
 }
 

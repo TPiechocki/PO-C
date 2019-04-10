@@ -11,6 +11,29 @@
 
 using namespace std;
 
+//protectedt
+bool World::makeCollision(Organism *organism) {
+    bool status = false;
+    Organism * new_org;
+
+    Organism *other = board[organism->getX()][organism->getY()].getOrganism();
+    if (other) {
+        if (organism->getKindString() == other->getKindString()) {      // jeśli organizmy są takie same to się rozmnażają
+            new_org = other->breed((Animal *)organism);
+            if (new_org && new_org->getKind() != board[new_org->getX()][new_org->getY()].getOrganism()->getKind()) {
+                board[new_org->getX()][new_org->getY()].getOrganism()->collision(new_org);
+            }
+        } else {     // dla zajętego pola przez organizm innego gatunku
+            status = other->collision(organism);
+        }
+    } else {        // jeśli pole było puste
+        board[organism->getX()][organism->getY()].setOrganism(organism);
+    }
+
+    // Jeśli poruszany obiekt przegrał lub poruszył się już wcześniej to elementy w wektorze przesuwają się o jeden
+    return status;
+}
+
 // public
 World::World(int x, int y) : size_x(x), size_y(y) {
     renderer = new Renderer(*this);
@@ -58,7 +81,17 @@ void World::addOrganism(Organism *org) {
         i = 0;
 
     entities.insert(entities.begin() + i, org);
-    board[org->getX()][org->getY()].setOrganism(org);
+
+    if (entities.size() > (size_x*size_y)+2) {
+        throw std::runtime_error("Too many organisms in vector!!!");
+    }
+
+    /**
+     *
+     */
+    if (board[org->getX()][org->getY()].getOrganism() == nullptr) {
+        board[org->getX()][org->getY()].setOrganism(org);
+    }
 }
 
 void World::removeOrganism(Organism *org) {
@@ -68,11 +101,14 @@ void World::removeOrganism(Organism *org) {
             break;
     }
 
-    entities.erase(entities.begin() + i);
+    if (i < entities.size())
+        entities.erase(entities.begin() + i);
 }
 
 void World::makeTurn() {
-    Organism *other;
+    std::sort(entities.begin(), entities.end(), OrgComp());
+
+    renderer->clearMessages();
     clrscr();
 
     for(auto i : entities) {
@@ -84,20 +120,16 @@ void World::makeTurn() {
         board[entities[i]->getX()][entities[i]->getY()].setNull();
         entities[i]->move();
 
-        other = board[entities[i]->getX()][entities[i]->getY()].getOrganism();
-        if (other) {
-            bool status = other->collision(entities[i]);
-
-            // Jeśli poruszany obiekt przegrał lub poruszył się już wcześniej to elementy w wektorze przesuwają się o jeden
-            if (status)
-                i--;
-            if (other == entities[i])
-                printf("%c %d\n", other->draw(), i);
-        } else {
-            board[entities[i]->getX()][entities[i]->getY()].setOrganism(entities[i]);
-            printf("%c %d\n", entities[i]->draw(), i);
-        }
+        if (makeCollision(entities[i]))
+            i--;
     }
+
+    // clean lost organisms from vector
+    /*
+    for(auto i : entities) {
+        if (i != board[i->getX()][i->getY()].getOrganism())
+            removeOrganism(i);
+    }*/
 }
 
 World::~World() {

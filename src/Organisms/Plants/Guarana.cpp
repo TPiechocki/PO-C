@@ -16,12 +16,21 @@ char Guarana::draw() {
     return 'G';
 }
 
-std::string Guarana::getKind() {
+std::string Guarana::getKindString() {
     return "Guarana";
 }
 
 bool Guarana::collision(Organism *attacker) {
-    return Organism::collision(attacker);
+    std::string msg;
+
+    msg = "Atakujacy " + attacker->getKindString() + " zjada " + this->getKindString() + ". Sila atakujacego wzrosla o 3.";
+    world->newMessage(msg);
+
+    world->removeOrganism(this);
+    world->setOrganismOnBoard(attacker);
+    attacker->changeStrength(3);
+
+    return false;
 }
 
 

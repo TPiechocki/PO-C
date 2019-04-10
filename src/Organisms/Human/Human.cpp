@@ -22,7 +22,7 @@ void Human::randomDirection() {
     // empty
 }
 
-std::string Human::getKind() {
+std::string Human::getKindString() {
     return "Czlowiek";
 }
 

@@ -6,7 +6,7 @@
 #define PO_C_GUARANA_H
 
 
-#include "../Plant.h"
+#include "src/Organisms/Plant.h"
 
 class Guarana : public Plant {
 protected:
@@ -17,7 +17,7 @@ public:
 
     char draw() override;
 
-    std::string getKind() override;
+    std::string getKindString() override;
 
     bool collision(Organism *attacker) override;
 

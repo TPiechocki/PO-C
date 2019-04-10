@@ -28,6 +28,12 @@ private:
      * Renderer wyświetlający świat oraz powiadomienia
      */
     Renderer* renderer;
+protected:
+    /**
+     * Sprawdza czy pole na którym wylądował organizm jest pełny, jeśli tak to wykonuję odpowiednią kolizję
+     * @return true - jeśli elementy w wektorze od co najmniej badanego organizmu się przesunęły w stronę początku
+     */
+    bool makeCollision(Organism *);
 public:
     World(int x, int y);
 
@@ -57,6 +63,9 @@ public:
      */
     void addOrganism(Organism *);
 
+    /**
+     * Usunięcie organizmu z wektora wszystkich organizmów
+     */
     void removeOrganism(Organism *);
 
     /**

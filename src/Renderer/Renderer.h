@@ -28,6 +28,8 @@ public:
      */
     void newMessage(const std::string&);
 
+    void clearMessages();
+
     /**
      * Wyświetlenie planszy świata
      */

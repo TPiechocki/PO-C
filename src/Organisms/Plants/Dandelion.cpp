@@ -13,7 +13,7 @@ char Dandelion::draw() {
     return 'M';
 }
 
-std::string Dandelion::getKind() {
+std::string Dandelion::getKindString() {
     return "Mlecz";
 }
 

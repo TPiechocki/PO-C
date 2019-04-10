@@ -14,7 +14,7 @@ char Sheep::draw() {
     return 'O';
 }
 
-std::string Sheep::getKind() {
+std::string Sheep::getKindString() {
     return "Owca";
 }
 

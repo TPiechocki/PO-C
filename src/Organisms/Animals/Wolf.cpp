@@ -14,7 +14,7 @@ char Wolf::draw() {
     return 'W';
 }
 
-std::string Wolf::getKind() {
+std::string Wolf::getKindString() {
     return "Wilk";
 }
 

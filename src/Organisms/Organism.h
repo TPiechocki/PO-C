@@ -22,6 +22,7 @@
 #include "../World/World.h"
 
 class World;
+class Animal;
 
 enum Kind {
     HUMAN, SHEEP, WOLF, GRASS, DANDELION
@@ -38,6 +39,7 @@ protected:
     virtual Organism * createNewInstance(int x, int y, World *world) = 0;
 
     virtual void randomDirection();
+
 public:
     Organism(int x, int y, World *world);
 
@@ -62,24 +64,36 @@ public:
 
     int getStrength() const;
 
+    Kind getKind() {
+        return kind;
+    };
+
     /**
      * Zmiana wieku o 1 w góre, wywołane dla każdego w każdej turze.
      */
     void addOneAge();
 
     /**
+    * Change organism strange by int value.
+    */
+    void changeStrength(int);
+
+    /**
      * Kolizja z innym organizmem
      * @param attacker - atakujący
-     * @return - zwyciężca
+     * @return - prawda jeśli zabity został poruszający się organizm lub zabity organizm był wcześniej już ruszony
+     *      Wtedy wszystkie eleementy wektora się przesuwają, więc trzbea zmniejszyć inedks pętli tury.
      */
     virtual bool collision(Organism *attacker);
+
+    virtual Organism *breed(Animal *);
 
     /**
      * @return Zwraca znak charakterystyczny dla gatunku
      */
     virtual char draw() = 0;
 
-    virtual std::string getKind() = 0;
+    virtual std::string getKindString() = 0;
 
     bool operator<(const Organism &rhs) const;
 

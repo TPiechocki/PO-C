@@ -23,8 +23,9 @@ using namespace std;
 #include "Organisms/Animals/Fox.h"
 #include "Organisms/Plants/Grass.h"
 #include "Organisms/Plants/Dandelion.h"
+#include "Organisms/Plants/Guarana.h"
 
-int main() {
+int main() try {
     srand(static_cast<unsigned int>(time(nullptr)));
     int x,y;
 
@@ -44,11 +45,14 @@ int main() {
 
     auto *player = new Human(0, 0, world);
     world->addOrganism(player);
-    world->addOrganism(new Sheep(0,15, world));
-    world->addOrganism(new Wolf(0,1, world));
+    world->addOrganism(new Sheep(0,10, world));
+    world->addOrganism(new Sheep(0,11, world));
+    world->addOrganism(new Sheep(0,12, world));
+    world->addOrganism(new Wolf(0,5, world));
     world->addOrganism(new Fox(1,0, world));
     world->addOrganism(new Grass(19, 19, world));
-    world->addOrganism(new Dandelion(0, 19, world));
+    world->addOrganism(new Dandelion(0, 18, world));
+    world->addOrganism(new Guarana(0, 1, world));
 
 
     renderer->displayWorld();
@@ -80,4 +84,11 @@ int main() {
         }
     }
     return 0;
+}
+catch (const std::exception& e) {
+    cerr << endl << "Error: " << e.what() << endl;
+    return 1;
+}
+catch(...) {
+    std::cout << "whoops!" << std::endl;
 }

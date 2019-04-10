@@ -19,6 +19,10 @@ void Renderer::newMessage(const std::string& msg) {
     messages.push_back(msg);
 }
 
+void Renderer::clearMessages() {
+    messages.clear();
+}
+
 void Renderer::displayWorld() const {
     for (int i = 0; i < 100; ++i) {
         cout  << endl;

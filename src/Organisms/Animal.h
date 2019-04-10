@@ -18,7 +18,13 @@ public:
     /**
      * Ruch w odpowiednim kierunku
      */
-    void move() override;\
+    void move() override;
+
+    /**
+     * Rozmnażanie się organizów tego samego gatunku
+     * @return wskaźnik na nowy organizm
+     */
+    Organism * breed(Animal *) override;
 
 
     ~Animal() override;

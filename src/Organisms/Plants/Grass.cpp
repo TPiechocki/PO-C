@@ -13,7 +13,7 @@ char Grass::draw() {
     return 'T';
 }
 
-std::string Grass::getKind() {
+std::string Grass::getKindString() {
     return "Trawa";
 }
 
