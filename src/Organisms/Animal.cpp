@@ -4,7 +4,7 @@
 
 #include "Animal.h"
 
-#include "../World/world.h"
+#include "../World/World.h"
 
 Animal::Animal(int x, int y, World *world) : Organism(x, y, world) {
     previous_x = x;

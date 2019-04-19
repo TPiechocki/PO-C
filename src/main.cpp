@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 
-#define TEST
+//#define TEST
 
 using namespace std;
 
@@ -25,13 +25,23 @@ int main() try {
 
 #ifdef TEST
     x=20, y=20;
-#else       // TODO world size limits
+#else
      do {
         cout << "Podaj szerokosc planszy: ";
         cin >> x;
         cout << "Podaj wysokosc planszy: ";
         cin >> y;
-    } while (!(x*y < 100 || x < 50 || y < 50 || x>0 || y>0));
+
+        if (x*y < 100)
+            cout << endl << "Plansza musi miec conajmniej 100 pol. " << endl;
+        if (y > 50)
+            cout << endl << "Wysokosc planszy nie moze byc wieksza niz 50. " << endl;
+         if (x > 100)
+             cout << endl << "Szerokosc planszy nie moze byc wieksza niz 150. " << endl;
+        if (x <= 0 || y <= 0)
+            cout << endl << "Wymiar planszy musi byc wiekszy od 0 " << endl;
+
+    } while (!(x*y >= 100 && x <= 150 && y <= 50 && x > 0 && y > 0));
 #endif
 
     auto *world = new World(x, y);

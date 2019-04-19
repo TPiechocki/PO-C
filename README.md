@@ -4,6 +4,9 @@ First project for Object-oriented Programming written in C++.
 
 Changelog:
 
+0.2
+- random Organisms generator
+
 0.1
 - player's special skill
 - all needed plants added

@@ -24,10 +24,131 @@
 using namespace std;
 
 // private
+int World::randomX() {
+    return rand() % size_x;
+}
+
+int World::randomY() {
+    return rand() % size_y;
+}
+
 void World::randomOrganisms() {
-    player = new Human(0, 0, this);
+    int rate, limit, x, y;
+
+    player = new Human(randomX(), randomY(), this);
     addOrganism(player);
-    addOrganism(new Sheep(0,10, this));
+
+    // Owce z prawdopobieństwem 2-4 sztuk na 200 pól (dla 0-199 pól 2-4 sztuki, dla 200-399 pól 4-8 sztuk itd.)
+    rate = 1 + (size_x * size_y)/200;
+    limit = rand() % 3*rate + 2*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Sheep(randomX(), randomY(), this));
+    }
+
+    // Wilk - 2-3 na 400 pól (0-399 - 2-3; 400-799 - 4-6 itd.)
+    rate = 1 + (size_x * size_y)/400;
+    limit = rand() % 2*rate + 2*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Wolf(randomX(), randomY(), this));
+    }
+
+    // Lis - 2-4 na 300 pól (0-299 - 2-4; 300-599 - 4-8 itd.)
+    rate = 1 + (size_x * size_y)/300;
+    limit = rand() % 3*rate + 2*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Fox(randomX(), randomY(), this));
+    }
+
+    // Zolw - 2-3 na 500 pól (0-499 - 2-3; 500-999 - 4-6 itd.)
+    rate = 1 + (size_x * size_y)/500;
+    limit = rand() % 2*rate + 2*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Tortoise(randomX(), randomY(), this));
+    }
+
+    // Antylopa - 2-4 na 300 pól (0-299 - 2-3; 300-599 - 4-8 itd.)
+    rate = 1 + (size_x * size_y)/300;
+    limit = rand() % 3*rate + 2*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Antelope(randomX(), randomY(), this));
+    }
+
+    // Trawa - 2-4 na 100 pól (100-199 - 2-4, 200-299 - 4-8 itd.)
+    rate = (size_x * size_y)/100;
+    limit = rand() % 3*rate + 2*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Grass(randomX(), randomY(), this));
+    }
+
+    // Mlecz - 1-2 na 100 pól (100-199 - 1-2, 200-299 - 2-4 itd.)
+    rate = (size_x * size_y)/100;
+    limit = rand() % 1*rate + 1*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Dandelion(randomX(), randomY(), this));
+    }
+
+    // Guarana - 1-3 na 500 pól (0-499 - 1-3, 500-999 - 2-6 itd.)
+    rate = 1 + (size_x * size_y)/500;
+    limit = rand() % 3*rate + 1*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Guarana(randomX(), randomY(), this));
+    }
+
+    // Wilcza jagoda - 1-2 na 500 pól (0-499 - 1-2, 500-999 - 2-4 itd.)
+    rate = 1 + (size_x * size_y)/500;
+    limit = rand() % 2*rate + 1*rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Belladonna(randomX(), randomY(), this));
+    }
+
+    // Barszcz Sosnowskiego - 1 na 1000 pól (0-999 - 1, 1000-1999 - 2 itd.)
+    rate = 1 + (size_x * size_y)/1000;
+    limit = rate;
+    for (int i = 0; i < limit; ++i) {
+        do {
+            x = randomX();
+            y = randomY();
+        } while (getOrganismFromBoard(x, y) != nullptr);
+        addOrganism(new Hogweed(randomX(), randomY(), this));
+    }
+
+    /*addOrganism(new Sheep(0,10, this));
     addOrganism(new Sheep(0,11, this));
     addOrganism(new Wolf(0,5, this));
     addOrganism(new Fox(1,0, this));
@@ -39,7 +160,7 @@ void World::randomOrganisms() {
     addOrganism(new Dandelion(0, 18, this));
     addOrganism(new Guarana(0, 1, this));
     addOrganism(new Belladonna(0,4, this));
-    addOrganism(new Hogweed(10, 0, this));
+    addOrganism(new Hogweed(10, 0, this));*/
 }
 
 // protected
@@ -171,23 +292,25 @@ void World::makeTurn() {
     }
 
     int i = -1;
-    while (++i < entities.size()  && entities[i]->getAge() > 0) {
-        board[entities[i]->getX()][entities[i]->getY()].setNull();
+    while (++i < entities.size()) {
+        if (entities[i]->getAge() > 0) {
+            board[entities[i]->getX()][entities[i]->getY()].setNull();
 
-        temp = entities[i];
-        temp->move();
+            temp = entities[i];
+            temp->move();
 
-        makeCollision(temp);
+            makeCollision(temp);
 
-        // naprawa indeksu i, jeśli organizmy w wektorze się przesunęły, po czyjejś śmierci
-		if (find(entities.begin(), entities.end(), temp) != entities.end()) {   // jeśli temp dalej żyje
-			while (i > entities.size() || entities[i] < temp) {
-				if (i == 0)
-					break;
-				i--;
-			}
-        } else {    // jeśli temp został zabity          
-			--i;
+            // naprawa indeksu i, jeśli organizmy w wektorze się przesunęły, po czyjejś śmierci
+            if (find(entities.begin(), entities.end(), temp) != entities.end()) {   // jeśli temp dalej żyje
+                while (i > entities.size() || entities[i] < temp) {
+                    if (i == 0)
+                        break;
+                    i--;
+                }
+            } else {    // jeśli temp został zabity
+                --i;
+            }
         }
 
     }

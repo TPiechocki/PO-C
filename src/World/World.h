@@ -29,6 +29,16 @@ private:
 
     Human *player;
 
+    /**
+     * Generowanie losowych wspolrzednych
+     */
+    int randomX();
+
+    int randomY();
+
+    /**
+     * Losowe ustawinie organizmów na początku gry
+     */
     void randomOrganisms();
 
     /**
