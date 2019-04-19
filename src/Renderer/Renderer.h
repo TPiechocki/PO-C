@@ -5,6 +5,8 @@
 #ifndef PO_C_RENDERER_H
 #define PO_C_RENDERER_H
 
+#include <thread>
+
 #include "../World/World.h"
 #include "Notifications.h"
 
@@ -14,12 +16,15 @@ class Renderer {
 private:
     World& world;
 
-    // thread for notifications
-    pthread_t notif_thread;
-
     // double sided list of messages for notifications
     std::deque<std::string> messages;
 
+    bool finish_notif_status, notif_working;
+
+    /**
+     * Zakończenie obecnie działającego wątku z powiadomieniami
+     */
+    void endNotifications();
 public:
     explicit Renderer(World& world);
 
@@ -27,6 +32,11 @@ public:
      * Dodanie wiadomości na końcu listy
      */
     void newMessage(const std::string&);
+
+    /**
+     * Dodanie wiadomości na początek, żeby się wyswietliła w pierwszej kolejności
+     */
+    void newPriorityMessage(const std::string&);
 
     void clearMessages();
 

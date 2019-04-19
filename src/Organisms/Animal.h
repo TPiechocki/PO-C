@@ -8,10 +8,6 @@
 #include "Organism.h"
 
 class Animal : public Organism {
-protected:
-    // Poprzednie koordynaty mogą się przydać przy odbiciu żółwia.
-    int previous_x{}, previous_y{};
-
 public:
     Animal(int x, int y, World *world);
 
@@ -20,12 +16,13 @@ public:
      */
     void move() override;
 
+    void moveToSafe() override;
+
     /**
      * Rozmnażanie się organizów tego samego gatunku
      * @return wskaźnik na nowy organizm
      */
     Organism * breed(Animal *) override;
-
 
     ~Animal() override;
 };

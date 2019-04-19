@@ -6,6 +6,7 @@
 
 Guarana::Guarana(int x, int y, World *world) : Plant(x, y, world) {
     strength = 0;
+    kind = GUARANA;
 }
 
 Organism *Guarana::createNewInstance(int x, int y, World *world) {
@@ -26,9 +27,10 @@ bool Guarana::collision(Organism *attacker) {
     msg = "Atakujacy " + attacker->getKindString() + " zjada " + this->getKindString() + ". Sila atakujacego wzrosla o 3.";
     world->newMessage(msg);
 
-    world->removeOrganism(this);
     world->setOrganismOnBoard(attacker);
     attacker->changeStrength(3);
+
+	world->removeOrganism(this);
 
     return false;
 }

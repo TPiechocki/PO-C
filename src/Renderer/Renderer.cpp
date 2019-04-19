@@ -2,6 +2,9 @@
 // Created by Tomasz Piechocki on 31/03/2019.
 //
 
+
+#include <chrono>
+#include <ctime>
 #include <thread>
 #include <iostream>
 
@@ -12,14 +15,20 @@ using namespace std;
 
 Renderer::Renderer(World& world) : world(world) {
     messages = std::deque<std::string>();
-    notif_thread = 0;
+    finish_notif_status = false;
+    notif_working = false;
 }
 
 void Renderer::newMessage(const std::string& msg) {
     messages.push_back(msg);
 }
 
+void Renderer::newPriorityMessage(const std::string &msg) {
+    messages.push_front(msg);
+}
+
 void Renderer::clearMessages() {
+    endNotifications();
     messages.clear();
 }
 
@@ -48,18 +57,25 @@ void Renderer::displayWorld() const {
 }
 
 void Renderer::displayNotifications() {
-    if (notif_thread != 0) {
-        pthread_cancel(notif_thread);
-        notif_thread = 0;
-    }
+    endNotifications();
 
-    Notifications notifications;
-
+    // run new thread
     std::thread notif([&]() {
-        notifications.run(messages);
+        Notifications::run(messages, &finish_notif_status, &notif_working);
     });
-    notif_thread = notif.native_handle();
+    notif_working = true;
     notif.detach();
+}
+
+void Renderer::endNotifications() {
+    // end previous thread if working
+    finish_notif_status = true;
+    if (notif_working) {
+        while (finish_notif_status || notif_working) {
+            // void
+        }
+    }
+    finish_notif_status = false;
 }
 
 Renderer::~Renderer() = default;

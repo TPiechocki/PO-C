@@ -37,7 +37,7 @@ void Plant::move() {
         if (!(world->getOrganismFromBoard(x_coord+x_temp, y_coord+y_temp)) && (x_temp || y_temp)) {
             world->addOrganism(createNewInstance(x_coord+x_temp, y_coord+y_temp, world));
 
-            std::string msg = this->getKindString() + ": Roślina się rozprzestrzeniła.";
+            std::string msg = this->getKindString() + ": Roslina sie rozprzestrzenila.";
             world->newMessage(msg);
 
         }

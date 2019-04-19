@@ -11,9 +11,12 @@
 #include "../Organisms/Organism.h"
 #include "../Renderer/Renderer.h"
 
+
+
 class Field;
 class Organism;
 class Renderer;
+class Human;
 
 
 class World {
@@ -22,7 +25,11 @@ private:
 
     Field** board;
 
-    std::vector<Organism*> entities;
+    std::vector<Organism *> entities;
+
+    Human *player;
+
+    void randomOrganisms();
 
     /**
      * Renderer wyświetlający świat oraz powiadomienia
@@ -43,7 +50,11 @@ public:
 
     Renderer *getRenderer() const;
 
+    Human *getPlayer() const;
+
     void newMessage(const std::string&);
+
+    void newPriorityMessage(const std::string&);
 
     /**
      * Na potrzebę kolizji.

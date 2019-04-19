@@ -6,7 +6,7 @@
 #define PO_C_GUARANA_H
 
 
-#include "src/Organisms/Plant.h"
+#include "../Plant.h"
 
 class Guarana : public Plant {
 protected:

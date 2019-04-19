@@ -52,6 +52,12 @@ bool Organism::operator>=(const Organism &rhs) const {
     return !(*this < rhs);
 }
 
+void Organism::setPreviousXY() {
+    x_coord = previous_x;
+    y_coord = previous_y;
+}
+
+
 void Organism::addOneAge() {
  age++;
 }
@@ -80,6 +86,9 @@ int Organism::getAge() const {
 int Organism::getStrength() const {
     return strength;
 }
+Kind Organism::getKind() {
+    return kind;
+}
 
 bool Organism::collision(Organism *attacker) {
     std::string msg;
@@ -91,7 +100,6 @@ bool Organism::collision(Organism *attacker) {
 
         world->removeOrganism(attacker);
         world->setOrganismOnBoard(this);
-        free(attacker);
         return true;
     } else {      // jeśli siła równa dla obu to wygrywa atakujący
         msg = "Atakujacy " + attacker->getKindString() + " zabija " + this->getKindString();
@@ -99,7 +107,6 @@ bool Organism::collision(Organism *attacker) {
 
         world->removeOrganism(this);
         world->setOrganismOnBoard(attacker);
-        free(this);
         return status;
     }
 }
@@ -108,5 +115,8 @@ Organism *Organism::breed(Animal *) {
     return nullptr;
 }
 
+bool Organism::canBeKilled() {
+    return true;
+}
 
 Organism::~Organism() = default;

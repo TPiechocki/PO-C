@@ -25,12 +25,15 @@ class World;
 class Animal;
 
 enum Kind {
-    HUMAN, SHEEP, WOLF, GRASS, DANDELION
+    HUMAN, SHEEP, WOLF, ANTELOPE, TORTOISE, GRASS, DANDELION, GUARANA, BELLADONNA, HOGWEED
 };
 
 class Organism {
 protected:
     int strength{}, initiative{}, x_coord, y_coord, age, direction;
+
+    // Poprzednie koordynaty mogą się przydać przy odbiciu żółwia.
+    int previous_x{}, previous_y{};
 
     Kind kind{};
 
@@ -43,10 +46,25 @@ protected:
 public:
     Organism(int x, int y, World *world);
 
+    bool operator<(const Organism &rhs) const;
+
+    bool operator>(const Organism &rhs) const;
+
+    bool operator<=(const Organism &rhs) const;
+
+    bool operator>=(const Organism &rhs) const;
+
     /**
      * Wykonanie ruchu
      */
     virtual void move() = 0;
+
+    /**
+     * Ruch na sąsiednie puste pole. Tylko dla zwierząt.
+     */
+    virtual void moveToSafe() {};
+
+    void setPreviousXY();
 
     /**
      * @return aktualna pozycja x
@@ -64,9 +82,7 @@ public:
 
     int getStrength() const;
 
-    Kind getKind() {
-        return kind;
-    };
+    Kind getKind();
 
     /**
      * Zmiana wieku o 1 w góre, wywołane dla każdego w każdej turze.
@@ -86,22 +102,26 @@ public:
      */
     virtual bool collision(Organism *attacker);
 
+    /**
+     * Rozmnażanie się, ważne przy zwierzętach.
+     * @return wskaźnik na nowo urodzony obiekt jeśli takowy się pojawi
+     */
     virtual Organism *breed(Animal *);
+
+    virtual /**
+     * Prwada jeśli może zginąć, fałsz gdy jest nieśmiertelny (specjalna umijętność człowieka)
+     */
+    bool canBeKilled();
 
     /**
      * @return Zwraca znak charakterystyczny dla gatunku
      */
     virtual char draw() = 0;
 
+    /**
+     * @return słowna nazwa gatunku
+     */
     virtual std::string getKindString() = 0;
-
-    bool operator<(const Organism &rhs) const;
-
-    bool operator>(const Organism &rhs) const;
-
-    bool operator<=(const Organism &rhs) const;
-
-    bool operator>=(const Organism &rhs) const;
 
     virtual ~Organism();
 };

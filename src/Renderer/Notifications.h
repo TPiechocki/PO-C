@@ -16,7 +16,7 @@ public:
      * Metoda dla wątka do wyświetlania powiadomień
      * @param messages - lista wiadomości do wyświetlenia
      */
-    void run(std::deque<std::string>& messages);
+    static void run(std::deque<std::string> &messages, bool *finish, bool *working);
 };
 
 
