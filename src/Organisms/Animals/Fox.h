@@ -19,8 +19,6 @@ public:
     std::string getKindString() override;
 
     void move() override;
-
-    ~Fox() override;
 };
 
 

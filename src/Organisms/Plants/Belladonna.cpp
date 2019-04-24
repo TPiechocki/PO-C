@@ -31,5 +31,3 @@ bool Belladonna::collision(Organism *attacker) {
     world->setOrganismOnBoard(this);
     return true;
 }
-
-Belladonna::~Belladonna() = default;

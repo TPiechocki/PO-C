@@ -12,7 +12,7 @@ class Animal;
 class Human final : public Animal {
 private:
     // zawiera wiek przy którym specjalna umiejętność(nieśmiertelność) będzie działać po raz ostatni dla poprzedniej aktywacji
-    int immortalityEnd;
+    int immortality_end;
 
 protected:
     /**
@@ -41,8 +41,6 @@ public:
     char draw() override;
 
     std::string getKindString() override;
-
-    ~Human() override;
 };
 
 

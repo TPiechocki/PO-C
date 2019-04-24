@@ -24,8 +24,6 @@ public:
     void move() override;
 
     bool collision(Organism *attacker) override;
-
-    ~Hogweed() override;
 };
 
 

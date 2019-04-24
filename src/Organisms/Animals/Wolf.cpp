@@ -21,5 +21,3 @@ std::string Wolf::getKindString() {
 Organism *Wolf::createNewInstance(int x, int y, World *world) {
     return new Wolf(x, y, world);
 }
-
-Wolf::~Wolf() = default;

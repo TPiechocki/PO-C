@@ -21,5 +21,3 @@ std::string Sheep::getKindString() {
 Organism *Sheep::createNewInstance(int x, int y, World *world) {
     return new Sheep(x, y, world);
 }
-
-Sheep::~Sheep() = default;

@@ -21,5 +21,3 @@ std::string Grass::getKindString() {
 Plant *Grass::createNewInstance(int x, int y, World *world) {
     return new Grass(x, y, world);
 }
-
-Grass::~Grass() = default;

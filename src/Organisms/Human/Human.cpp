@@ -9,7 +9,7 @@
 Human::Human(int x, int y, World* world) : Animal(x, y, world) {
     strength = 5;
     initiative = 4;
-    immortalityEnd = -10;
+    immortality_end = -10;
     kind = HUMAN;
 }
 
@@ -30,13 +30,13 @@ std::string Human::setDirection(int ch) {
 }
 
 void Human::activateImmortality() {
-    if (immortalityEnd < age - 5) {
-        immortalityEnd = age + 5;
+    if (immortality_end < age - 5) {
+        immortality_end = age + 5;
         world->newPriorityMessage("Niesmiertelnosc aktywowana");
-    } else if (immortalityEnd >= age) {
-        world->newPriorityMessage("Niesmiertelnosc jeszcze aktywna przez " + std::to_string(immortalityEnd - age) + " tur.");
+    } else if (immortality_end >= age) {
+        world->newPriorityMessage("Niesmiertelnosc jeszcze aktywna przez " + std::to_string(immortality_end - age) + " tur.");
     } else {
-        world->newPriorityMessage("Nie mozesz jeszcze aktywowac niesmiertelnosci. Mozliwe za " + std::to_string(immortalityEnd + 5 - age + 1) + " tur.");
+        world->newPriorityMessage("Nie mozesz jeszcze aktywowac niesmiertelnosci. Mozliwe za " + std::to_string(immortality_end + 5 - age + 1) + " tur.");
     }
 }
 
@@ -57,11 +57,9 @@ Organism *Human::createNewInstance(int x, int y, World *world) {
 }
 
 bool Human::canBeKilled() {
-    if (immortalityEnd >= age) {
+    if (immortality_end >= age) {
         world->newMessage("Ale dzieki niesmiertelnosci czlowiek przezyl.");
         return false;
     }
     return true;
 }
-
-Human::~Human() = default;

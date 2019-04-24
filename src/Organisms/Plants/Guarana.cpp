@@ -34,6 +34,3 @@ bool Guarana::collision(Organism *attacker) {
 
     return false;
 }
-
-
-Guarana::~Guarana() = default;

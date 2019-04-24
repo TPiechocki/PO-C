@@ -18,8 +18,6 @@ public:
     char draw() override;
 
     std::string getKindString() override;
-
-    ~Grass() override;
 };
 
 #endif //PO_C_GRASS_H

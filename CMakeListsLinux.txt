@@ -7,8 +7,8 @@ include_directories(.)
 include_directories(src)
 
 file(GLOB_RECURSE SOURCES src/*.cpp)
-add_executable(PO_C ${SOURCES})file(GLOB_RECURSE SOURCES src/*.cpp)
-                               add_executable(PO_C ${SOURCES})
+add_executable(PO_C ${SOURCES})
+
 
 SET(GCC_COVERAGE_COMPILE_FLAGS "-I/usr/include/ -pthread")
 SET(GCC_COVERAGE_LINK_FLAGS    "-L/usr/lib -lcaca")

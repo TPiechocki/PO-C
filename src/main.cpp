@@ -16,8 +16,8 @@ using namespace std;
 #endif
 
 #include "World/World.h"
-
 #include "Organisms/Human/Human.h"
+#include "Utils/File.h"
 
 int main() try {
     srand(static_cast<unsigned int>(time(nullptr)));
@@ -32,6 +32,14 @@ int main() try {
         cout << "Podaj wysokosc planszy: ";
         cin >> y;
 
+        // Wyczyszczenie buforu cin przy znakach innych niż liczba.
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore();
+            cout << endl << "Wymiary muszą być liczbami! " << endl;
+            continue;
+        }
+
         if (x*y < 100)
             cout << endl << "Plansza musi miec conajmniej 100 pol. " << endl;
         if (y > 50)
@@ -43,8 +51,8 @@ int main() try {
 
     } while (!(x*y >= 100 && x <= 150 && y <= 50 && x > 0 && y > 0));
 #endif
-
-    auto *world = new World(x, y);
+    auto *file = new File();
+    auto *world = new World(x, y, true);
     Renderer* renderer = world->getRenderer();
 
     Human *player = world->getPlayer();
@@ -74,13 +82,40 @@ int main() try {
             case KEY_DOWN:
             case KEY_LEFT:
             case KEY_RIGHT:
-                renderer->newPriorityMessage(player->setDirection(ch));
+				if (player)
+					renderer->newPriorityMessage(player->setDirection(ch));
+				else
+					renderer->newPriorityMessage("Nie mozna zmienic kierunku.");
                 renderer->displayNotifications();
+                break;
+            // zapis pliku
+            case 's':
+				renderer->clearMessages();
+                file->save(world);
+                renderer->newPriorityMessage("Zapisano do pliku.");
+                renderer->displayWorld();
+                renderer->displayNotifications();
+                break;
+            // odczyt z pliku
+            case 'l':
+                renderer->clearMessages();
+                World *temp_world;
+                temp_world = file->read();
+                if (temp_world) {
+                    delete world;
+                    world = temp_world;
+                    renderer = world->getRenderer();
+                    player = world->getPlayer();
+                    renderer->displayWorld();
+                }
                 break;
             default:
                 break;
         }
     }
+
+	delete file;
+	delete world;
     return 0;
 }
 catch (const std::exception& e) {

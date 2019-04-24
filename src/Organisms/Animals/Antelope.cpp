@@ -68,5 +68,3 @@ bool Antelope::collision(Organism *attacker) {
         return false;
     }
 }
-
-Antelope::~Antelope() = default;

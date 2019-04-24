@@ -45,5 +45,3 @@ void Plant::move() {
 }
 
 Plant::~Plant() = default;
-
-

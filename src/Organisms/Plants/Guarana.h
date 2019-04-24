@@ -20,8 +20,6 @@ public:
     std::string getKindString() override;
 
     bool collision(Organism *attacker) override;
-
-    ~Guarana() override;
 };
 
 

@@ -27,8 +27,6 @@ public:
      * Żółw odpiera ataki przeciwników o sile mniejszej niż 5.
      */
     bool collision(Organism *attacker) override;
-
-    ~Tortoise();
 };
 
 

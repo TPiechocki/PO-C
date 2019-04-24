@@ -52,7 +52,12 @@ protected:
      */
     bool makeCollision(Organism *);
 public:
-    World(int x, int y);
+    /**
+     * @param x - szerokość
+     * @param y - wysokość
+     * @param new_board - prawda, jeśli mają się pojawić losowe organizmy
+     */
+    World(int x, int y, bool new_board);
 
     int getSizeX() const;
 
@@ -60,7 +65,9 @@ public:
 
     Renderer *getRenderer() const;
 
-    Human *getPlayer() const;
+    Human *getPlayer();
+
+    int getEntititesSize() const;
 
     void newMessage(const std::string&);
 
@@ -93,6 +100,12 @@ public:
      * Wykonanie tury
      */
     void makeTurn();
+
+    /**
+     * Zapis zawartości obiektu do pliku lub odczytanie zawartości do pliku
+     * @param write - prawda jeśli zapis, fałsz jeśli odczytywanie (odczytywanie nic nie robi)
+     */
+    void Serialise(std::fstream &file, bool write);
 
     ~World();
 };

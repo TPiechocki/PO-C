@@ -25,7 +25,3 @@ void Dandelion::move() {
     for (int i = 0; i < 3; ++i)
         Plant::move();
 }
-
-Dandelion::~Dandelion() = default;
-
-

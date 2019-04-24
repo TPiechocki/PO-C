@@ -9,17 +9,17 @@
 #include "World.h"
 #include "../Utils/OrgComp.h"
 
-#include "Organisms/Human/Human.h"
-#include "Organisms/Animals/Sheep.h"
-#include "Organisms/Animals/Wolf.h"
-#include "Organisms/Animals/Fox.h"
-#include "Organisms/Animals/Antelope.h"
-#include "Organisms/Animals/Tortoise.h"
-#include "Organisms/Plants/Grass.h"
-#include "Organisms/Plants/Dandelion.h"
-#include "Organisms/Plants/Guarana.h"
-#include "Organisms/Plants/Belladonna.h"
-#include "Organisms/Plants/Hogweed.h"
+#include "../Organisms/Human/Human.h"
+#include "../Organisms/Animals/Sheep.h"
+#include "../Organisms/Animals/Wolf.h"
+#include "../Organisms/Animals/Fox.h"
+#include "../Organisms/Animals/Antelope.h"
+#include "../Organisms/Animals/Tortoise.h"
+#include "../Organisms/Plants/Grass.h"
+#include "../Organisms/Plants/Dandelion.h"
+#include "../Organisms/Plants/Guarana.h"
+#include "../Organisms/Plants/Belladonna.h"
+#include "../Organisms/Plants/Hogweed.h"
 
 using namespace std;
 
@@ -187,7 +187,7 @@ bool World::makeCollision(Organism *organism) {
 }
 
 // public
-World::World(int x, int y) : size_x(x), size_y(y) {
+World::World(int x, int y, bool new_board) : size_x(x), size_y(y) {
     renderer = new Renderer(*this);
     board = new Field *[size_x];
     for (int i = 0; i < size_x; ++i) {
@@ -195,7 +195,10 @@ World::World(int x, int y) : size_x(x), size_y(y) {
     }
 
     player = nullptr;
-    randomOrganisms();
+
+    if (new_board) {
+        randomOrganisms();
+    }
 }
 
 int World::getSizeX() const {
@@ -222,10 +225,19 @@ Renderer *World::getRenderer() const {
     return renderer;
 }
 
-Human *World::getPlayer() const {
-    return player;
+Human *World::getPlayer() {
+	if (player == nullptr) {
+		for (auto & entity : entities) {
+			if (entity->getKind() == HUMAN)
+				player = dynamic_cast<Human *>(entity);
+		}
+	}
+	return player;
 }
 
+int World::getEntititesSize() const {
+    return entities.size();
+}
 
 void World::newMessage(const std::string &msg) {
     renderer->newMessage(msg);
@@ -271,10 +283,10 @@ void World::removeOrganism(Organism *org) {
             }
         }
 
-        if (i < entities.size())
+        if (i < entities.size()) {
             entities.erase(entities.begin() + i);
-
-        free(org);
+        }
+        delete org;
     } else {
         org->moveToSafe();
     }
@@ -303,7 +315,7 @@ void World::makeTurn() {
 
             // naprawa indeksu i, jeśli organizmy w wektorze się przesunęły, po czyjejś śmierci
             if (find(entities.begin(), entities.end(), temp) != entities.end()) {   // jeśli temp dalej żyje
-                while (i > entities.size() || entities[i] < temp) {
+                while (i >= entities.size() || entities[i] < temp) {
                     if (i == 0)
                         break;
                     i--;
@@ -314,16 +326,31 @@ void World::makeTurn() {
         }
 
     }
+}
 
-    // clean lost organisms from vector
-    /*
-    for(auto i : entities) {
-        if (i != board[i->getX()][i->getY()].getOrganism())
-            removeOrganism(i);
-    }*/
+void World::Serialise(std::fstream &file, bool write) {
+    if (write) {
+        file.write(reinterpret_cast<const char *>(&size_x), sizeof(size_x));
+        file.write(reinterpret_cast<const char *>(&size_y), sizeof(size_y));
+
+        int n = getEntititesSize();
+        file.write(reinterpret_cast<const char *>(&n), sizeof(n));
+
+        Kind kind;
+        for (int i = 0; i < n; ++i) {
+            kind = entities[i]->getKind();
+            file.write(reinterpret_cast<const char *>(&kind), sizeof(kind));
+            entities[i]->Serialise(file, true);
+        }
+    }
 }
 
 World::~World() {
+    for (int i = 0; i < entities.size(); i++) {
+        delete entities[i];
+    }
+    entities.clear();
+
     for (int i = 0; i < size_x; ++i) {
         delete[] board[i];
     }

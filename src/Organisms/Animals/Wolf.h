@@ -17,8 +17,6 @@ public:
     char draw() override;
 
     std::string getKindString() override;
-
-    ~Wolf() override;
 };
 
 

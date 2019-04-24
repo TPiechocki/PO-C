@@ -39,5 +39,3 @@ bool Tortoise::collision(Organism *attacker) {
     } else      // dla pozostałych normalna kolizja
         return Organism::collision(attacker);
 }
-
-Tortoise::~Tortoise() = default;

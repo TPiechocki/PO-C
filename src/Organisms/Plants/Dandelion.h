@@ -25,8 +25,6 @@ public:
      * Mlecz próbuje się rozprzestrzenić trzykrotnie
      */
     void move() override;
-
-    ~Dandelion() override;
 };
 
 

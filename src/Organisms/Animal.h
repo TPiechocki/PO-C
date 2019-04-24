@@ -24,7 +24,7 @@ public:
      */
     Organism * breed(Animal *) override;
 
-    ~Animal() override;
+    virtual ~Animal();
 };
 
 

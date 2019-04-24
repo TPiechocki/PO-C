@@ -7,6 +7,7 @@
 Fox::Fox(int x, int y, World *world) : Animal(x, y, world) {
     initiative = 7;
     strength = 3;
+    kind = FOX;
 }
 
 char Fox::draw() {
@@ -62,5 +63,3 @@ void Fox::move() {
         }
     }
 }
-
-Fox::~Fox() = default;

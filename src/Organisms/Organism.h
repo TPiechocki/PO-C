@@ -19,13 +19,15 @@
     #define KEY_RIGHT 77
 #endif
 
+#include <fstream>
+
 #include "../World/World.h"
 
 class World;
 class Animal;
 
 enum Kind {
-    HUMAN, SHEEP, WOLF, ANTELOPE, TORTOISE, GRASS, DANDELION, GUARANA, BELLADONNA, HOGWEED
+    HUMAN, SHEEP, WOLF, FOX, ANTELOPE, TORTOISE, GRASS, DANDELION, GUARANA, BELLADONNA, HOGWEED
 };
 
 class Organism {
@@ -84,6 +86,8 @@ public:
 
     Kind getKind();
 
+    void setWorld(World *world);
+
     /**
      * Zmiana wieku o 1 w góre, wywołane dla każdego w każdej turze.
      */
@@ -109,7 +113,7 @@ public:
     virtual Organism *breed(Animal *);
 
     virtual /**
-     * Prwada jeśli może zginąć, fałsz gdy jest nieśmiertelny (specjalna umijętność człowieka)
+     * Prawda jeśli może zginąć, fałsz gdy jest nieśmiertelny (specjalna umijętność człowieka)
      */
     bool canBeKilled();
 
@@ -122,6 +126,14 @@ public:
      * @return słowna nazwa gatunku
      */
     virtual std::string getKindString() = 0;
+
+    /**
+     * Zapis zawartości obiektu do pliku lub odczytanie zawartości do pliku
+     * @param write - prawda jeśli zapis, fałsz jeśli odczytywanie
+     */
+    void Serialise(std::fstream &file, bool write);
+
+    friend class File;
 
     virtual ~Organism();
 };

@@ -24,7 +24,7 @@ public:
      */
     void move() override;
 
-    ~Plant() override;
+    virtual ~Plant();
 };
 
 

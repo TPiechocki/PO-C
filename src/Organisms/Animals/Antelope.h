@@ -28,8 +28,6 @@ public:
      * Antylopa ma 50% szans na ucieczkę
      */
     bool collision(Organism *attacker) override;
-
-    ~Antelope();
 };
 
 

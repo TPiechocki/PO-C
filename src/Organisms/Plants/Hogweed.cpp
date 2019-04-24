@@ -55,5 +55,3 @@ bool Hogweed::collision(Organism *attacker) {
     world->setOrganismOnBoard(this);
     return true;
 }
-
-Hogweed::~Hogweed() = default;

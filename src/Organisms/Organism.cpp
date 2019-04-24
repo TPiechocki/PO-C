@@ -5,6 +5,8 @@
 #include "Organism.h"
 #include "../Utils/OrgComp.h"
 
+using namespace std;
+
 //protected
 void Organism::randomDirection()  {
     int n = rand() % 4;
@@ -98,15 +100,17 @@ bool Organism::collision(Organism *attacker) {
         msg = "Broniacy sie " + this->getKindString() + " zabija " + attacker->getKindString();
         world->newMessage(msg);
 
+		world->setOrganismOnBoard(this);
         world->removeOrganism(attacker);
-        world->setOrganismOnBoard(this);
+
         return true;
     } else {      // jeśli siła równa dla obu to wygrywa atakujący
         msg = "Atakujacy " + attacker->getKindString() + " zabija " + this->getKindString();
         world->newMessage(msg);
 
+		world->setOrganismOnBoard(attacker);
         world->removeOrganism(this);
-        world->setOrganismOnBoard(attacker);
+
         return status;
     }
 }
@@ -117,6 +121,28 @@ Organism *Organism::breed(Animal *) {
 
 bool Organism::canBeKilled() {
     return true;
+}
+
+void Organism::Serialise(fstream &file, bool write) {
+    if (write) {
+        file.write(reinterpret_cast<const char *>(&x_coord), sizeof(x_coord));
+        file.write(reinterpret_cast<const char *>(&y_coord), sizeof(y_coord));
+        file.write(reinterpret_cast<const char *>(&previous_x), sizeof(previous_x));
+        file.write(reinterpret_cast<const char *>(&previous_y), sizeof(previous_y));
+        file.write(reinterpret_cast<const char *>(&age), sizeof(age));
+        file.write(reinterpret_cast<const char *>(&strength), sizeof(strength));
+    } else {
+        file.read(reinterpret_cast<char *>(&x_coord), sizeof(x_coord));
+        file.read(reinterpret_cast<char *>(&y_coord), sizeof(y_coord));
+        file.read(reinterpret_cast<char *>(&previous_x), sizeof(previous_x));
+        file.read(reinterpret_cast<char *>(&previous_y), sizeof(previous_y));
+        file.read(reinterpret_cast<char *>(&age), sizeof(age));
+        file.read(reinterpret_cast<char *>(&strength), sizeof(strength));
+    }
+}
+
+void Organism::setWorld(World *world) {
+    Organism::world = world;
 }
 
 Organism::~Organism() = default;

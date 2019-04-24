@@ -22,8 +22,6 @@ public:
      * Wilcza jagoda zabija wszystkie organizmy, które ją zaatakowały.
      */
     bool collision(Organism *attacker) override;
-
-    ~Belladonna() override;
 };
 
 
