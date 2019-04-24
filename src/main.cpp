@@ -36,7 +36,7 @@ int main() try {
         if (cin.fail()) {
             cin.clear();
             cin.ignore();
-            cout << endl << "Wymiary muszą być liczbami! " << endl;
+            cout << endl << "Wymiary musza byc liczbami! " << endl;
             continue;
         }
 
