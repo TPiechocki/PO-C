@@ -12,8 +12,11 @@
 class OrgComp {
 public:
     inline bool operator() (const Organism* orgL, const Organism* orgR) {
-        return (orgL->getInitiative() > orgR->getInitiative()) ||
-                ((orgL->getInitiative() == orgR->getInitiative()) && orgL->getAge() > orgR->getAge());
+        if (orgL->getInitiative() < orgR->getInitiative())
+            return true;
+        if (orgL->getInitiative() > orgR->getInitiative())
+            return false;
+        return orgL->getAge() < orgR->getAge();
     }
 };
 

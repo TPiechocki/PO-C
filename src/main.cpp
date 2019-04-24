@@ -68,6 +68,7 @@ int main() try {
                 break;
             // wykonanie tury
             case 't':
+                clrscr();
                 world->makeTurn();
                 renderer->displayWorld();
                 renderer->displayNotifications();

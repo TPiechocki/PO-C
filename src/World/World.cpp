@@ -46,7 +46,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Sheep(randomX(), randomY(), this));
+        addOrganism(new Sheep(x, y, this));
     }
 
     // Wilk - 2-3 na 400 pól (0-399 - 2-3; 400-799 - 4-6 itd.)
@@ -57,7 +57,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Wolf(randomX(), randomY(), this));
+        addOrganism(new Wolf(x, y, this));
     }
 
     // Lis - 2-4 na 300 pól (0-299 - 2-4; 300-599 - 4-8 itd.)
@@ -68,7 +68,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Fox(randomX(), randomY(), this));
+        addOrganism(new Fox(x, y, this));
     }
 
     // Zolw - 2-3 na 500 pól (0-499 - 2-3; 500-999 - 4-6 itd.)
@@ -79,7 +79,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Tortoise(randomX(), randomY(), this));
+        addOrganism(new Tortoise(x, y, this));
     }
 
     // Antylopa - 2-4 na 300 pól (0-299 - 2-3; 300-599 - 4-8 itd.)
@@ -90,7 +90,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Antelope(randomX(), randomY(), this));
+        addOrganism(new Antelope(x, y, this));
     }
 
     // Trawa - 2-4 na 100 pól (100-199 - 2-4, 200-299 - 4-8 itd.)
@@ -101,7 +101,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Grass(randomX(), randomY(), this));
+        addOrganism(new Grass(x, y, this));
     }
 
     // Mlecz - 1-2 na 100 pól (100-199 - 1-2, 200-299 - 2-4 itd.)
@@ -112,7 +112,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Dandelion(randomX(), randomY(), this));
+        addOrganism(new Dandelion(x, y, this));
     }
 
     // Guarana - 1-3 na 500 pól (0-499 - 1-3, 500-999 - 2-6 itd.)
@@ -123,7 +123,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Guarana(randomX(), randomY(), this));
+        addOrganism(new Guarana(x, y, this));
     }
 
     // Wilcza jagoda - 1-2 na 500 pól (0-499 - 1-2, 500-999 - 2-4 itd.)
@@ -134,7 +134,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Belladonna(randomX(), randomY(), this));
+        addOrganism(new Belladonna(x, y, this));
     }
 
     // Barszcz Sosnowskiego - 1 na 1000 pól (0-999 - 1, 1000-1999 - 2 itd.)
@@ -145,7 +145,7 @@ void World::randomOrganisms() {
             x = randomX();
             y = randomY();
         } while (getOrganismFromBoard(x, y) != nullptr);
-        addOrganism(new Hogweed(randomX(), randomY(), this));
+        addOrganism(new Hogweed(x, y, this));
     }
 
     /*addOrganism(new Sheep(0,10, this));
@@ -256,10 +256,6 @@ void World::addOrganism(Organism *org) {
 
     entities.insert(entities.begin() + i, org);
 
-    /*if (entities.size() > (size_x*size_y)+2) {
-        throw std::runtime_error("Too many organisms in vector!!!");
-    }*/
-
 	if (org->getX() < 0 || org->getY() < 0) {
 		cout << endl;
 	}
@@ -293,7 +289,8 @@ void World::removeOrganism(Organism *org) {
 }
 
 void World::makeTurn() {
-    std::sort(entities.begin(), entities.end(), OrgComp());
+    // Niepotrzebne odkąd organizmy są dodawane we właściwym  miejscu
+    // std::sort(entities.begin(), entities.end(), OrgComp());
 
     Organism *temp = nullptr;
 
@@ -301,7 +298,9 @@ void World::makeTurn() {
 
     for(auto i : entities) {
         i->addOneAge();
+        printf("%c ", i->draw());
     }
+
 
     int i = -1;
     while (++i < entities.size()) {
