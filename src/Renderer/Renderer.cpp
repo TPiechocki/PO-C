@@ -37,6 +37,8 @@ void Renderer::displayWorld() const {
         cout  << endl;
     }
 
+    cout << "Tomasz Piechcoki, 175690" << endl;
+
     cout << "|";
     for (int i = 0; i < world.getSizeX() ; i++)
         cout << "-";
